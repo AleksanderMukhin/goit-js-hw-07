@@ -25,64 +25,21 @@ function createImageCardsMarkup(galleryItems) {
   }).join("");
 };
 
-function onGalleryContainerClick(evt) {
-  console.log(evt.target.dataset.source);
+function onGalleryContainerClick(event) {
+  console.log(event.target.dataset.source);
 //-Запрети это поведение по умолчанию чтобы браузер не открывал ссылку в новом окне
-  evt.preventDefault();
+  event.preventDefault();
 
   const instance = basicLightbox.create(`
-    <img src="${evt.target.dataset.source}" width="800" height="600">
+    <img src="${event.target.dataset.source}" width="800" height="600">
 `)
+  instance.show();
 
-instance.show()
+  window.addEventListener('keydown', onEscKeyPress);
+  
+function onEscKeyPress(event) {
+  if (event.code === 'Escape') {
+    instance.close();
 }
-
-
-
-//------------modal window----------
-// const refs = {
-//   openModalBtn: document.querySelector('[data-action="open-modal"]'),
-//   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
-//   backdrop: document.querySelector('.js-backdrop')
-// }
-
-// refs.openModalBtn.addEventListener('click', onOpenModal);
-// refs.closeModalBtn.addEventListener('click', closeModal);
-// refs.backdrop.addEventListener('click', closeModal)
-
-// function onOpenModal() {
-//   window.addEventListener('keydown', onEscKeyPress);
-//   document.body.classList.add('show-modal');
-// };
-
-// function closeModal() {
-//   window.removeEventListener('keydown', onEscKeyPress);
-//   document.body.classList.remove('show-modal')
-// };
-
-// function onBackdropClick(event) {
-//   if (event.currentTarget === event.target) {
-//     closeModal();
-//   }
-// };
-
-// function onEscKeyPress(event) {
-//   if (event.code === 'Escape') {
-//     closeModal();
-// }
-// }
-
-// (function (x) {
-//   delete x;
-//   return x;
-// })
-//   (1)
-// console.log(x)
-
-// const singleBtn = document.querySelector("#single");
-
-// const handleClick = () => {
-//   console.log("click event listener callback");
-// };
-
-// singleBtn.addEventListener("click", handleClick);
+}
+}
