@@ -29,7 +29,11 @@ function onGalleryContainerClick(event) {
   console.log(event.target.dataset.source);
 //-Запрети это поведение по умолчанию чтобы браузер не открывал ссылку в новом окне
   event.preventDefault();
-
+  
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+  
   const instance = basicLightbox.create(`
     <img src="${event.target.dataset.source}" width="800" height="600">
 `)
