@@ -27,23 +27,26 @@ function createImageCardsMarkup(galleryItems) {
 
 function onGalleryContainerClick(event) {
   console.log(event.target.dataset.source);
-//-Запрети это поведение по умолчанию чтобы браузер не открывал ссылку в новом окне
+  //-Запрети это поведение по умолчанию чтобы браузер не открывал ссылку в новом окне
   event.preventDefault();
   
   if (event.target.nodeName !== "IMG") {
     return;
   }
   
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">
-`)
-  instance.show();
-
-  window.addEventListener('keydown', onEscKeyPress);
+  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`, {
+    onShow: (instance) => {
+      window.addEventListener("keydown", onEscKeyPress);
+      
+      function onEscKeyPress(event) {
+        if (event.code === "Escape") {
+          instance.close();
+        }
+      }
+    },
+    onClose: (instance) =>
+      window.removeEventListener("keydown", event),
+  });
   
-function onEscKeyPress(event) {
-  if (event.code === 'Escape') {
-    instance.close();
-}
-}
+  instance.show();
 }
