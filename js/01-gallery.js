@@ -45,8 +45,8 @@ function onGalleryContainerClick(event) {
       }
     },
     onClose: (instance) =>
-      window.removeEventListener("keydown", event),
+      window.removeEventListener("keydown", onEscKeyPress),
   });
-  
+
   instance.show();
 }
